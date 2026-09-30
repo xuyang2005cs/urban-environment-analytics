@@ -39,6 +39,18 @@ def test_normalization_coerces_bad_values_to_null(weather_payload):
     assert pd.isna(frame.loc[0, "temperature"])
 
 
+def test_quality_check_counts_failed_numeric_conversion(weather_payload):
+    weather_payload["hourly"]["temperature_2m"][0] = "invalid"
+    frame = weather_to_dataframe(weather_payload, "beijing")
+    report = check_dataframe(
+        frame,
+        required_columns={"city", "timestamp", "temperature"},
+        numeric_columns={"temperature"},
+    )
+    assert report.invalid_numeric == 1
+    assert report.result == "WARN"
+
+
 def test_inner_merge_aligns_city_and_timestamp(weather_payload, air_payload):
     weather = weather_to_dataframe(weather_payload, "beijing")
     air = air_quality_to_dataframe(air_payload, "beijing")

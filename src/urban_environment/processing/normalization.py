@@ -60,7 +60,12 @@ def _hourly_to_dataframe(
     frame = pd.DataFrame({target: hourly[source] for source, target in column_map.items()})
     frame.insert(0, "city", city_id)
     frame["timestamp"] = pd.to_datetime(frame["timestamp"], errors="coerce")
+    invalid_numeric = 0
     for column in frame.columns.difference(["city", "timestamp"]):
-        frame[column] = pd.to_numeric(frame[column], errors="coerce")
+        original = frame[column]
+        converted = pd.to_numeric(original, errors="coerce")
+        invalid_numeric += int((original.notna() & converted.isna()).sum())
+        frame[column] = converted
+    frame.attrs["invalid_numeric"] = invalid_numeric
     return frame
 

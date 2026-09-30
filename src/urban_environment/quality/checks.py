@@ -37,9 +37,13 @@ def check_dataframe(
         if {"city", "timestamp"}.issubset(frame.columns)
         else 0
     )
-    invalid_numeric = sum(
+    observed_invalid_numeric = sum(
         int(frame[column].notna().sum() - pd.to_numeric(frame[column], errors="coerce").notna().sum())
         for column in numeric_columns.intersection(frame.columns)
+    )
+    invalid_numeric = max(
+        observed_invalid_numeric,
+        int(frame.attrs.get("invalid_numeric", 0)),
     )
 
     if frame.empty or missing or "timestamp" not in frame or frame["timestamp"].isna().any():
