@@ -8,6 +8,7 @@ htmlcov/
 coverage.xml
 logs/
 output/
+.playwright-cli/
 *.log
 .idea/
 .vscode/
