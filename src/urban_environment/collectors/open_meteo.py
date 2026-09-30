@@ -19,6 +19,7 @@ WEATHER_VARIABLES = (
     "precipitation",
     "wind_speed_10m",
     "surface_pressure",
+    "weather_code",
 )
 AIR_QUALITY_VARIABLES = (
     "pm2_5",

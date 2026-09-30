@@ -267,17 +267,19 @@ class DataPipeline:
             required = {
                 "city", "country", "timestamp", "timezone", "temperature",
                 "relative_humidity", "precipitation", "wind_speed", "surface_pressure",
-                "source", "ingested_at",
+                "weather_code", "source", "ingested_at",
             }
             numeric = {
                 "temperature", "relative_humidity", "precipitation", "wind_speed",
                 "surface_pressure",
+                "weather_code",
             }
             ranges = {
                 "relative_humidity": (0, 100),
                 "precipitation": (0, None),
                 "wind_speed": (0, None),
                 "surface_pressure": (500, 1200),
+                "weather_code": (0, 99),
             }
         else:
             required = {

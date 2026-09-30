@@ -15,6 +15,7 @@ WEATHER_COLUMN_MAP = {
     "precipitation": "precipitation",
     "wind_speed_10m": "wind_speed",
     "surface_pressure": "surface_pressure",
+    "weather_code": "weather_code",
 }
 AIR_COLUMN_MAP = {
     "time": "timestamp",

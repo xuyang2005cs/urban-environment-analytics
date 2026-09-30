@@ -19,6 +19,7 @@ def weather_payload() -> dict[str, object]:
             "precipitation": [0.0, 0.1],
             "wind_speed_10m": [7.0, 8.0],
             "surface_pressure": [1010.0, 1009.5],
+            "weather_code": [1, 2],
         },
     }
 

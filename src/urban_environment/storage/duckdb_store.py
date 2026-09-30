@@ -92,7 +92,7 @@ class DuckDBStore:
                     SELECT
                         w.city, w.country, w.timestamp, w.timezone,
                         w.temperature, w.relative_humidity, w.precipitation,
-                        w.wind_speed, w.surface_pressure,
+                        w.wind_speed, w.surface_pressure, w.weather_code,
                         a.pm2_5, a.pm10, a.nitrogen_dioxide, a.ozone,
                         a.air_quality_index,
                         greatest(w.ingested_at, a.ingested_at) AS ingested_at

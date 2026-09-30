@@ -23,6 +23,7 @@ def test_weather_normalization(weather_payload):
         "precipitation",
         "wind_speed",
         "surface_pressure",
+        "weather_code",
         "timezone",
         "source",
         "ingested_at",

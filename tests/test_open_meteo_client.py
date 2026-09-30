@@ -50,6 +50,7 @@ def test_geocoding_success():
 def test_weather_success(weather_payload):
     def handler(request: httpx.Request) -> httpx.Response:
         assert "surface_pressure" in request.url.params["hourly"]
+        assert "weather_code" in request.url.params["hourly"]
         return httpx.Response(200, json=weather_payload)
 
     result = client_for(handler).fetch_weather(
