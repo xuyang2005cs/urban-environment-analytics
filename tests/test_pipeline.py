@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import copy
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 import pytest
 
@@ -55,7 +56,10 @@ def test_pipeline_explicit_rerun_skips_duplicates(tmp_path, beijing, weather_pay
 
 def test_pipeline_watermark_prevents_refetch(tmp_path, beijing, weather_payload, air_payload):
     pipeline = make_pipeline(tmp_path, beijing, weather_payload, air_payload)
-    end_of_available_window = datetime(2026, 9, 29, 15, tzinfo=timezone.utc)
+    local_now = datetime.now(ZoneInfo(beijing.timezone))
+    end_of_available_window = (local_now - timedelta(days=1)).replace(
+        hour=23, minute=0, second=0, microsecond=0
+    ).astimezone(timezone.utc)
     pipeline.database.set_watermark("beijing", "weather", end_of_available_window)
     pipeline.database.set_watermark("beijing", "air_quality", end_of_available_window)
     second = pipeline.run()
