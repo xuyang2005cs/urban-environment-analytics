@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import pytest
+import pandas as pd
+
+from urban_environment.models.city import City
 
 
 @pytest.fixture
@@ -33,4 +36,41 @@ def air_payload() -> dict[str, object]:
             "european_aqi": [25.0, 26.0],
         },
     }
+
+
+@pytest.fixture
+def beijing() -> City:
+    return City(
+        id="beijing",
+        name="北京",
+        query_name="Beijing",
+        country="中国",
+        country_code="CN",
+        latitude=39.9075,
+        longitude=116.39723,
+        timezone="Asia/Shanghai",
+    )
+
+
+@pytest.fixture
+def environment_frame() -> pd.DataFrame:
+    timestamps = pd.date_range("2026-09-20", periods=192, freq="h", tz="UTC")
+    rows = []
+    for city, offset in (("beijing", 0.0), ("tokyo", 2.0)):
+        for index, timestamp in enumerate(timestamps):
+            rows.append(
+                {
+                    "city": city,
+                    "timestamp": timestamp,
+                    "temperature": 20 + offset + (index % 24) / 4,
+                    "relative_humidity": 55 + (index % 10),
+                    "precipitation": 0.2 if index % 30 == 0 else 0.0,
+                    "wind_speed": 5 + (index % 7),
+                    "pm2_5": 15 + offset + (index % 8),
+                    "pm10": 25 + offset + (index % 9),
+                    "air_quality_index": 30 + offset + (index % 11),
+                    "ozone": 50 + index % 12,
+                }
+            )
+    return pd.DataFrame(rows)
 

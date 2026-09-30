@@ -16,14 +16,18 @@ def test_weather_normalization(weather_payload):
     frame = weather_to_dataframe(weather_payload, "beijing")
     assert frame.columns.tolist() == [
         "city",
+        "country",
         "timestamp",
         "temperature",
         "relative_humidity",
         "precipitation",
         "wind_speed",
         "surface_pressure",
+        "timezone",
+        "source",
+        "ingested_at",
     ]
-    assert pd.api.types.is_datetime64_any_dtype(frame["timestamp"])
+    assert str(frame["timestamp"].dtype) == "datetime64[ns, UTC]"
     assert frame["temperature"].dtype.kind in "fi"
 
 
