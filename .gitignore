@@ -14,6 +14,13 @@ output/
 .vscode/
 *.tmp
 *.temp
+.agents/
+.codex/
+.impeccable/
+design-system/
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
 
 data/raw/*
 !data/raw/.gitkeep
