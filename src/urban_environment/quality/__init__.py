@@ -1,0 +1,2 @@
+"""Lightweight data-quality checks."""
+
