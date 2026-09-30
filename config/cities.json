@@ -1,0 +1,63 @@
+[
+  {
+    "id": "beijing",
+    "name": "北京",
+    "query_name": "Beijing",
+    "country": "中国",
+    "country_code": "CN",
+    "latitude": 39.9075,
+    "longitude": 116.39723,
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "shanghai",
+    "name": "上海",
+    "query_name": "Shanghai",
+    "country": "中国",
+    "country_code": "CN",
+    "latitude": 31.22222,
+    "longitude": 121.45806,
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "guangzhou",
+    "name": "广州",
+    "query_name": "Guangzhou",
+    "country": "中国",
+    "country_code": "CN",
+    "latitude": 23.11667,
+    "longitude": 113.25,
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "shenzhen",
+    "name": "深圳",
+    "query_name": "Shenzhen",
+    "country": "中国",
+    "country_code": "CN",
+    "latitude": 22.54554,
+    "longitude": 114.0683,
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "tokyo",
+    "name": "东京",
+    "query_name": "Tokyo",
+    "country": "日本",
+    "country_code": "JP",
+    "latitude": 35.6895,
+    "longitude": 139.69171,
+    "timezone": "Asia/Tokyo"
+  },
+  {
+    "id": "osaka",
+    "name": "大阪",
+    "query_name": "Osaka",
+    "country": "日本",
+    "country_code": "JP",
+    "latitude": 34.69379,
+    "longitude": 135.50107,
+    "timezone": "Asia/Tokyo"
+  }
+]
+
