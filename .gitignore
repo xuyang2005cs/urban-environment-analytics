@@ -21,6 +21,9 @@ design-system/
 frontend/node_modules/
 frontend/dist/
 frontend/coverage/
+frontend/*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
 
 data/raw/*
 !data/raw/.gitkeep

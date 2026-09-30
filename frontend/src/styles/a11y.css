@@ -1,0 +1,44 @@
+:focus-visible {
+  outline: 3px solid #287f91;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 12px;
+  z-index: 100;
+  padding: 10px 14px;
+  background: #fff;
+  border: 2px solid #287f91;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus { transform: none; }
+.route-loading { min-height: 100vh; display: grid; place-items: center; background: #edf2ee; color: #607069; }
+.chart-loading { height: 320px; display: grid; place-items: center; color: #607069; background: #f5f8f5; }
+.city-hero .aqi-status { color: #142821; border-color: #91a99f; }
+.map-placeholder { min-height: 450px; display: grid; place-items: center; color: #607069; background: #edf2ee; }
+
+@media (pointer: coarse) {
+  .side-nav nav a,
+  .mobile-header button,
+  .menu-close,
+  .segmented button,
+  .button,
+  select { min-height: 44px; }
+}
+
+@media (max-width: 600px) {
+  body { padding-bottom: env(safe-area-inset-bottom); }
+  .bottom-nav { height: calc(64px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); }
+  select { font-size: 16px; }
+  .mobile-header button { width: 44px; height: 44px; padding: 10px; }
+}
+
+@media (forced-colors: active) {
+  .aqi-dot,
+  .status-signal,
+  .check-indicator,
+  .run-dot { border: 1px solid ButtonText; }
+}
