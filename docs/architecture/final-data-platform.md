@@ -1,31 +1,45 @@
-# 当前数据平台架构
+# 数据平台与 Web 应用架构
 
-当前实现保持为单机、可复现的数据工程系统，重点验证采集、分层存储、增量同步、质量控制和分析展示的完整链路。
+系统由数据采集管道、分析存储、只读 API 和多页面 Web 应用构成。采集与展示解耦：浏览器请求不会触发外部 API，也不会扫描 Raw JSON。
 
 ```mermaid
 flowchart LR
-    A[Open-Meteo APIs] --> B[OpenMeteoClient]
-    B --> C[Raw JSON Layer]
-    C --> D[Normalizer]
-    D --> E[Quality Checks]
-    E --> F[Partitioned Parquet]
-    F --> G[DuckDB Views]
-    G --> H[Analytics]
-    H --> I[Streamlit Dashboard]
-    J[APScheduler] --> K[Pipeline Lock]
-    K --> B
-    L[Watermarks / Run Metadata] <--> K
-    E --> L
+    subgraph Sources[公共数据源]
+      G[Open-Meteo Geocoding]
+      W[Historical Weather]
+      AQ[Air Quality]
+    end
+    subgraph Pipeline[增量数据管道]
+      C[OpenMeteoClient]
+      R[(Raw JSON)]
+      N[Normalizer]
+      Q[Quality Checks]
+      P[(Partitioned Parquet)]
+    end
+    subgraph Serving[分析与展示]
+      D[(DuckDB)]
+      A[Analytics Query]
+      F[FastAPI Read-only API]
+      UI[React Web App]
+    end
+    G --> C
+    W --> C
+    AQ --> C
+    C --> R --> N --> Q --> P --> D --> A --> F --> UI
+    S[APScheduler] --> L[Pipeline Lock] --> C
+    M[Watermarks / Run Metadata] <--> L
+    Q --> M
+    M --> D
 ```
 
 ## 边界与职责
 
-- `OpenMeteoClient` 集中处理 HTTP 超时、有限重试、状态码和 JSON 校验。
-- Raw 层保留接近原始响应的 JSON，便于追溯；生成数据不进入 Git。
-- Normalizer 将小时级数组转为 UTC 时间戳和稳定的 snake_case 表结构。
-- Quality Checks 在写入 Clean 层前执行，输出 PASS、WARN 或 FAIL。
-- Parquet 按数据集、城市、年、月分区，是可移植的 Clean 数据层。
-- DuckDB 只保存运行元数据并通过视图查询 Parquet，避免复制分析数据。
-- Dashboard 只读取 DuckDB，不调用外部 API，不承担采集或转换逻辑。
+- `OpenMeteoClient` 统一处理超时、有限重试、HTTP 状态和 JSON 校验。
+- Raw 层保留接近数据源的响应；生成数据不进入 Git。
+- Normalizer 生成 UTC 时间戳和稳定 snake_case 表结构。
+- Quality Checks 在写入 Clean 层前执行，并持久化可查询的运行摘要。
+- Parquet 是可移植的 Clean 数据层；DuckDB 提供视图、元数据与分析查询。
+- `AnalyticsRepository` 只读访问 DuckDB，FastAPI 使用 Pydantic 固化响应契约。
+- React Router 管理真实 URL；ECharts、Leaflet 与 SVG 天气系统只消费 API 数据。
 
-每个城市、每类数据单独记录运行结果。单个请求失败不会删除其他城市已经成功写入的数据。调度器使用进程锁和 `max_instances=1` 防止同一工作区内的重叠执行。
+每个城市、每类数据单独记录运行结果。单个请求失败不会删除其他城市已完成的结果。调度器通过进程锁和 `max_instances=1` 防止同一工作区重叠执行。

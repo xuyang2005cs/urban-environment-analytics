@@ -6,7 +6,7 @@
 |---|---|---|---|---|
 | UI UX Pro Max | `nextlevelbuilder/ui-ux-pro-max-skill` commit `09170ee`；CLI `2.15.0` | 全局安装 `ui-ux-pro-max-cli`，项目执行 `uipro init --ai codex`，技能位于 `.agents/skills/ui-ux-pro-max` | MIT | 产品类型、颜色、字体、图表、可访问性和 React 指南检索 |
 | Impeccable | `pbakaus/impeccable` commit `0d6b47e`；skill metadata `4.4.0` | 官方 CLI `4.1.0` 两次下载校验超时，改用官方仓库自带 `.agents/skills/impeccable` 构建 | Apache-2.0 | PRODUCT/DESIGN、方向抽签、critique、audit、polish 和 harden |
-| React Bits | `DavidHDev/react-bits` commit `e1bbb69` | 只在项目外浅克隆参考；不作为 Codex Skill，不复制整仓 | MIT + Commons Clause Condition | 选择少量免费、无额外依赖的动效组件 |
+| React Bits | `DavidHDev/react-bits` commit `e1bbb69` | 只在项目外浅克隆参考；不作为 Codex Skill，不复制整仓 | MIT + Commons Clause Condition | 采用 `FadeContent`，运行依赖为 `gsap@3.13.0` |
 | Karpathy Guidelines | `multica-ai/andrej-karpathy-skills` commit `2c60614` | 将 `skills/karpathy-guidelines` 安装到 `.agents/skills/karpathy-guidelines` | 仓库 README 与 SKILL 声明 MIT | 最后一轮前端精简和范围控制 |
 
 ## Hook 状态

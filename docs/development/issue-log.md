@@ -31,3 +31,27 @@
 **原因：** 未设置应用主题且 Plotly 使用默认调色板。
 
 **修复：** 增加项目级 Streamlit 主题，并为折线、状态和 AQI 显式定义颜色映射。
+
+## 5. FastAPI SPA 文件响应启动失败
+
+**现象：** 增加 React SPA fallback 后，FastAPI 在导入阶段抛出 response field 创建错误。
+
+**原因：** `FileResponse | RedirectResponse` 被框架解释为需要生成 OpenAPI schema 的响应模型。
+
+**修复：** 对静态文件与 SPA fallback 路由显式设置 `response_model=None`，业务 API 继续使用 Pydantic 响应契约。
+
+## 6. 固定日期 watermark 测试跨月失效
+
+**现象：** 系统日期进入 10 月后，原有 watermark 测试出现 4 条意外拉取记录。
+
+**原因：** 测试把 9 月 29 日写死为最后可用日，隐含依赖执行日期。
+
+**修复：** 按城市 IANA timezone 动态计算前一完整日期的 23:00，并转换为 UTC 后写入测试水位。
+
+## 7. 状态值大小写导致成功色未命中
+
+**现象：** 管道接口返回成功，但 Overview 与 Pipeline 的状态节点呈现为警告色。
+
+**原因：** 数据层返回 `SUCCESS`，CSS 语义类使用小写 `success`。
+
+**修复：** 生成 CSS class 时统一转为小写，判断展示文案时保留枚举原值，并通过真实页面复核。
