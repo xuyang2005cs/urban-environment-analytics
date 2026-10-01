@@ -8,7 +8,7 @@
 ![Tests](https://img.shields.io/badge/Tests-63%20passed-B47626?logo=pytest&logoColor=white)
 ![MIT License](https://img.shields.io/badge/License-MIT-142821)
 
-![城市环境概览](docs/images/web-overview.png)
+![Urban Environment Analytics Platform：从公共观测数据到城市环境洞察](docs/images/urban-analytics-hero.png)
 
 ## 项目一览
 
@@ -26,6 +26,8 @@
 ### 城市环境概览
 
 首页以城市当前观测为第一视觉，汇总天气、空气质量、本地时间和数据新鲜度。六城快捷卡片与环境地图提供从全局到单城分析的连续入口。
+
+[![城市环境概览](docs/images/web-overview.png)](docs/images/web-overview.png)
 
 ### 城市观测与比较
 
